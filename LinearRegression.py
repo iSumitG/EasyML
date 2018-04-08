@@ -41,15 +41,14 @@ def test(X_test, y_test, model):
     print "Complete\n"
     return mean_squared_error
 
-def train(X_train, y_train, ITERATIONS):
+def train(X_train, y_train):
     print "\nTraining model...",
 
     parameters = np.zeros((X_train.shape[1], 1)) # initialize the parameters to 0
 
     # run gradient descent for ITERATIONS
-    while ITERATIONS != 0:
+    for i in range(ITERATIONS):
         parameters = parameters - (ALPHA/DATASET_SIZE) * np.dot(X_train.transpose(), (np.dot(X_train, parameters) - y_train))
-        ITERATIONS -= 1
 
     print "Completed \n"
     return parameters
@@ -79,7 +78,7 @@ def start_regression():
         print "\nSome y_train data: "
         print y_train[0:5,:] if y_train.shape[0] > 5 else y_train
 
-    model = train(X_train, y_train, ITERATIONS) # train the model
+    model = train(X_train, y_train) # train the model
     mean_squared_error = test(X_test, y_test, model)
     plot(X_train, y_train, model)
 
