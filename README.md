@@ -1,2 +1,2 @@
 # SimpleML
-Simple, minimal, and easy to understand Machine Learning algorithms
+From-scratch, simple, minimal, and easy-to-understand implementation of Machine Learning algorithms.

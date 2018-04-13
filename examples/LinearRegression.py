@@ -1,69 +1,59 @@
-import numpy as np
 import sklearn.datasets
 import sklearn.model_selection
+import sklearn.linear_model
+import sklearn.metrics
 import matplotlib.pyplot as plt
 
 # data parameters
-DATASET_SIZE = 100 # number of data points
+DATASET_SIZE = 100  # number of data points
 NUMBER_OF_FEATURES = 1
 NUMBER_OF_TARGETS = 1
 BIAS = 0.1
 NOISE = 15.0
 TEST_SIZE = 0.3 # fraction of the data to be used for testing
 
-# training parameters
-ALPHA = 0.03 # learning rate
-ITERATIONS = 100 # number of iterations to run Gradient Descent
-
 # verbose mode
-VERBOSE = False
+VERBOSE = True
 
-def plot(X, y, model):
-    if X.shape[1] > 2:
+
+def plot(X_test, y_test, model):
+    if X_test.shape[1] > 2:
         print "Cannot plot the 2D graph because training data is of higher dimension"
         return
     print "Plotting linear regression...\n"
 
-    plt.scatter(X[:,1], y, marker=".")
-
-    line = np.linspace(np.amin(X[:,1])-1, np.amax(X[:,1])+1)
-    plt.plot(line, line * model[1] + model[0], color='red')
+    plt.scatter(X_test, y_test, marker=".")
+    plt.plot(X_test, model.predict(X_test), color='red')
     plt.show()
+
 
 def test(X_test, y_test, model):
     print "Testing model...\n"
-    mean_squared_error = (1.0 / (2*X_test.shape[0])) * np.sum((np.dot(X_test, model) - y_test)**2)
+    y_predicted = model.predict(X_test)
+
+    mean_squared_error = sklearn.metrics.mean_squared_error(y_test, y_predicted)
 
     if VERBOSE:
         print "Mean squared error on test data: " + str(mean_squared_error) + "\n"
+        print "Coefficients: " + str(model.coef_)
+        print "Variance score: " + str(sklearn.metrics.r2_score(y_test, y_predicted))
 
     return mean_squared_error
+
 
 def train(X_train, y_train):
     print "Training model...\n"
 
-    m = X_train.shape[1]
+    model = sklearn.linear_model.LinearRegression()
+    model.fit(X_train, y_train)
+    return model
 
-    parameters = np.zeros((m, 1)) # initialize the parameters to 0
-
-    # run gradient descent for ITERATIONS
-    for i in range(ITERATIONS):
-        error = np.dot(X_train, parameters) - y_train # X*theta - y
-        partial_derivative = np.dot(X_train.transpose(), error) # X' * (X*theta - y)
-        parameters = parameters - (ALPHA/DATASET_SIZE) * partial_derivative
-
-    return parameters # this is the learned model
 
 def generate_data():
     print "Generating data...\n"
-
     X, y = sklearn.datasets.make_regression(n_samples=DATASET_SIZE, n_features=NUMBER_OF_FEATURES, n_targets=NUMBER_OF_TARGETS, bias=BIAS, noise=NOISE) # generate regression data
-
-    vector_of_ones = np.ones((X.shape[0], 1))
-    X = np.concatenate((vector_of_ones, X), axis=1) # add a column of 1's in features
-    y = y.reshape((y.shape[0], 1)) # reshape y e.g. from (10,) to (10,1)
-
     return sklearn.model_selection.train_test_split(X, y, test_size=TEST_SIZE) # split the dataset into training / testing
+
 
 def start_regression():
     X_train, X_test, y_train, y_test = generate_data() # generate the data
@@ -71,18 +61,18 @@ def start_regression():
     if VERBOSE:
         print "X_train matrix is: " + str(X_train.shape[0]) + "x" + str(X_train.shape[1])
         print "X_test matrix is: " + str(X_test.shape[0]) + "x" + str(X_test.shape[1])
-        print "y_train matrix is: " + str(y_train.shape[0]) + "x" + str(y_train.shape[1])
-        print "y_test matrix is: " + str(y_test.shape[0]) + "x" + str(y_test.shape[1])+ "\n"
+        print "y_train matrix is: " + str(y_train.shape)
+        print "y_test matrix is: " + str(y_test.shape) + "\n"
         print "Some X_train data: "
         print X_train[0:5,:] if X_train.shape[0] > 5 else X_train
         print "\nSome y_train data: "
-        print y_train[0:5,:] if y_train.shape[0] > 5 else y_train
+        print y_train[0:5] if y_train.shape[0] > 5 else y_train
         print "\n"
 
-    model = train(X_train, y_train) # train the model
+    model = train(X_train, y_train)  # train the model
     mean_squared_error = test(X_test, y_test, model)
-    plot(X_train, y_train, model)
+    plot(X_test, y_test, model)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start_regression() # starting the regression
