@@ -1,3 +1,5 @@
+# Created by: Sumit Gupta. http://sumitg.com/about
+
 import sklearn.datasets
 import sklearn.model_selection
 import sklearn.linear_model
@@ -70,8 +72,8 @@ def start_regression():
         print "\n"
 
     model = train(X_train, y_train)  # train the model
-    mean_squared_error = test(X_test, y_test, model)
-    plot(X_test, y_test, model)
+    mean_squared_error = test(X_test, y_test, model)  # test the model
+    plot(X_test, y_test, model)  # plot the model
 
 
 if __name__ == "__main__":

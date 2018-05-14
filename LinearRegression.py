@@ -1,3 +1,5 @@
+# Created by: Sumit Gupta. http://sumitg.com/about
+
 import numpy as np
 import sklearn.datasets
 import sklearn.model_selection
