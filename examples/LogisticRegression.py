@@ -12,6 +12,7 @@ DATASET_SIZE = 1000
 NUMBER_OF_FEATURES = 2
 NUMBER_OF_CLASSES = 2
 NUMBER_OF_CLUSTER = 1
+NUMBER_OF_REDUNDANT = 0
 NOISE = 0.1
 TEST_SIZE = 0.3
 
@@ -60,7 +61,7 @@ def train(X_train, y_train):
 
 def generateData():
     print "Generating data...\n"
-    X, y = sklearn.datasets.make_classification(n_samples=DATASET_SIZE, n_features=NUMBER_OF_FEATURES, n_classes=NUMBER_OF_CLASSES, flip_y=NOISE, n_informative=NUMBER_OF_FEATURES, n_redundant=0, n_clusters_per_class=NUMBER_OF_CLUSTER)  # generate classification data
+    X, y = sklearn.datasets.make_classification(n_samples=DATASET_SIZE, n_features=NUMBER_OF_FEATURES, n_classes=NUMBER_OF_CLASSES, flip_y=NOISE, n_informative=NUMBER_OF_FEATURES, n_redundant=NUMBER_OF_REDUNDANT, n_clusters_per_class=NUMBER_OF_CLUSTER)  # generate classification data
     return sklearn.model_selection.train_test_split(X, y, test_size=TEST_SIZE)  # split the data into training / testing
 
 
