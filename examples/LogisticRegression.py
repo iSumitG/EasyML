@@ -27,9 +27,9 @@ VERBOSE = True
 
 def plot(X, y, model):
     if X.shape[1] > 2:
-        print "Cannot plot the 2D graph because training data is of higher dimension"
+        print("Cannot plot the 2D graph because training data is of higher dimension")
         return
-    print "Plotting logistic regression...\n"
+    print ("Plotting logistic regression...\n")
 
     plt.scatter(X[:,0], X[:,1], marker='.', c=y, s=10)
     line = np.linspace(np.amin(X[:, 0]) - 1, np.amax(X[:, 0]) + 1)
@@ -38,29 +38,29 @@ def plot(X, y, model):
 
 
 def test(X_test, y_test, model):
-    print "Testing model...\n"
+    print("Testing model...\n")
     y_predicted = model.predict(X_test)
     score = model.score(X_test, y_test)
     accuracy = sklearn.metrics.accuracy_score(y_test, y_predicted)
 
     if VERBOSE:
-        print "Accuracy on test data: " + str(accuracy) + "\n"
-        print "Score on test data: " + str(score) + "\n"
-        print "Coefficients: " + str(model.coef_)
-        print "Variance score: " + str(sklearn.metrics.r2_score(y_test, y_predicted))
+        print("Accuracy on test data: " + str(accuracy) + "\n")
+        print("Score on test data: " + str(score) + "\n")
+        print("Coefficients: " + str(model.coef_))
+        print("Variance score: " + str(sklearn.metrics.r2_score(y_test, y_predicted)))
 
     return accuracy
 
 
 def train(X_train, y_train):
-    print "Training model...\n"
+    print("Training model...\n")
     model = sklearn.linear_model.LogisticRegression(penalty=PENALTY, solver=SOLVER, C=C)
     model.fit(X_train, y_train)
     return model
 
 
 def generateData():
-    print "Generating data...\n"
+    print("Generating data...\n")
     X, y = sklearn.datasets.make_classification(n_samples=DATASET_SIZE, n_features=NUMBER_OF_FEATURES, n_classes=NUMBER_OF_CLASSES, flip_y=NOISE, n_informative=NUMBER_OF_FEATURES, n_redundant=NUMBER_OF_REDUNDANT, n_clusters_per_class=NUMBER_OF_CLUSTER)  # generate classification data
     return sklearn.model_selection.train_test_split(X, y, test_size=TEST_SIZE)  # split the data into training / testing
 
@@ -69,15 +69,15 @@ def start_logistic_regression():
     X_train, X_test, y_train, y_test = generateData()  # generate the data
 
     if VERBOSE:
-        print "X_train matrix is: " + str(X_train.shape[0]) + "x" + str(X_train.shape[1])
-        print "X_test matrix is: " + str(X_test.shape[0]) + "x" + str(X_test.shape[1])
-        print "y_train matrix is: " + str(y_train.shape)
-        print "y_test matrix is: " + str(y_test.shape) + "\n"
-        print "Some X_train data: "
-        print X_train[0:5,:] if X_train.shape[0] > 5 else X_train
-        print "\nSome y_train data: "
-        print y_train[0:5] if y_train.shape[0] > 5 else y_train
-        print "\n"
+        print("X_train matrix is: " + str(X_train.shape[0]) + "x" + str(X_train.shape[1]))
+        print("X_test matrix is: " + str(X_test.shape[0]) + "x" + str(X_test.shape[1]))
+        print("y_train matrix is: " + str(y_train.shape))
+        print("y_test matrix is: " + str(y_test.shape) + "\n")
+        print("Some X_train data: ")
+        print(X_train[0:5,:] if X_train.shape[0] > 5 else X_train)
+        print("\nSome y_train data: ")
+        print(y_train[0:5] if y_train.shape[0] > 5 else y_train)
+        print("\n")
 
     model = train(X_train, y_train)  # train the model
     accuracy = test(X_test, y_test, model)  # test the model
@@ -86,4 +86,3 @@ def start_logistic_regression():
 
 if __name__ == "__main__":
     start_logistic_regression()
-
