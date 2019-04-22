@@ -1,2 +1,2 @@
 # Experiments
-Random code, trying out things. 
+Random code / projects, trying out things. 

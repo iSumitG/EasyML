@@ -1,2 +1,2 @@
 # Machine Learning Examples
-Usage of machine learning algorithm. 
+Basic examples showing usage of machine learning algorithm from ML libraries.
