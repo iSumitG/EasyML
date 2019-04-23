@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 
 def unpickle(file):
     import pickle
@@ -7,6 +8,10 @@ def unpickle(file):
     return dict
 
 x = unpickle("../../data/cifar10/cifar-10-batches-py/data_batch_1")
+
+
+
+#print ("hello")
 
 #for t in x[b'data']:
     #print(t)

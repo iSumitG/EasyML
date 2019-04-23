@@ -1,2 +1,2 @@
-# Experiments
-Random code / projects, trying out things. 
+# EasyML Experiments
+Random code, trying out things.

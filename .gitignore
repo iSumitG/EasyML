@@ -2,3 +2,4 @@
 .idea/*
 datasets/
 data/
+projects/cifar10/.vscode/settings.json
